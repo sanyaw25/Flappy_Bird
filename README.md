@@ -12,7 +12,7 @@
 <br>
 
 <div align="center">
-  <img src="https://example.com/flappy-bird-image.png" alt="Flappy Bird" width="400"/>
+  <img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="Flappy Bird" width="400"/>
 </div>
 
 ## 🏆 About
