@@ -198,8 +198,8 @@ feel free to open an issue or contribute to the project!
 
 ## 📧 Contact
 
-For any questions or feedback, feel free to reach out at [sanyaw12722@gmail.com](mailto:your-email@example.com).
-
+For any questions or feedback, feel free to reach out at [sanyaw12722@gmail.com](mailto:sanyaw12722@gmail.com)
+or hit me up on linkedin at [Sanya Wadhawan]((https://www.linkedin.com/in/sanya-wadhawan1/)
 
 ## 🔧 Troubleshooting
 
