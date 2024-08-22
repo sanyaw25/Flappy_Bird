@@ -1,8 +1,9 @@
+
 # FLAPPY BIRD
 
 <p align="center">
   <a href="#about">About</a> &nbsp;&bull;&nbsp;
-  <a href="#architecture">Architecture</a> &nbsp;&bull;&nbsp;
+  <a href="#solution-architecture">The Solution Architecture</a> &nbsp;&bull;&nbsp;
   <a href="#research">Research</a> &nbsp;&bull;&nbsp;
   <a href="#getting-started">Getting Started</a> &nbsp;&bull;&nbsp;
   <a href="#tech-stack">Tech Stack</a>
@@ -11,45 +12,188 @@
 <br>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Status-Active-brightgreen" alt="Status" />
-  <img src="https://img.shields.io/badge/License-MIT-blue" alt="License" />
-  <img src="https://img.shields.io/badge/Version-1.0-orange" alt="Version" />
+  <img src="https://example.com/flappy-bird-image.png" alt="Flappy Bird" width="400"/>
 </div>
 
-<br>
+## 🏆 About
 
-## 💡 About
+**Training Flappy Bird using Reinforcement Learning**
+This project applies reinforcement learning to the classic Flappy Bird game using Stable Baselines3 and OpenAI Gym. It includes training a Deep Q-Network (DQN) to master the game and evaluate its performance over time. 
 
-Welcome to the **Flappy Bird Reinforcement Learning** project! 🎮
+## 📂 The Solution Architecture
 
-This project leverages **Deep Q-Learning (DQN)** to create an intelligent agent that learns to play the classic Flappy Bird game. The agent improves its gameplay through trial and error, refining its strategy to achieve higher scores. The goal is to explore how reinforcement learning can be applied to video games and to visualize the training process through detailed metrics.
+### Project Overview
 
-## 🏗️ Architecture
+- **Environment:** Flappy Bird Gym Environment
+- **Algorithm:** Deep Q-Learning (DQN)
+- **Neural Network:** Custom-built with Keras
+- **Visualization:** Training progress and performance metrics plotted using Matplotlib
 
-The project is built on the following architecture:
+### Key Components
 
-1. **Environment:** 
-   - **Flappy Bird** game environment simulated using OpenAI Gym.
-   
-2. **Agent:** 
-   - **Deep Q-Network (DQN)** from Stable Baselines3, which learns to make decisions based on the state of the game.
-   
-3. **Training Process:** 
-   - The agent is trained over millions of timesteps, with periodic checkpoints and performance visualizations.
+- **Neural Network Model:** Built with Keras, consisting of multiple dense layers.
+- **Callbacks:** Custom callbacks for saving model checkpoints and plotting training metrics.
+- **Training Script:** Executes the training process and monitors performance.
 
-## 📚 Research
+## 🔬 Research
 
-The project implements **Deep Q-Learning**, which involves:
+For insights into reinforcement learning and the DQN algorithm, refer to these resources:
 
-- **Deep Q-Network (DQN):** A neural network that approximates the Q-values of actions, allowing the agent to make informed decisions.
-- **Experience Replay:** A technique that stores past experiences and replays them to improve learning stability.
-- **Target Network:** Helps in stabilizing the training process by providing consistent target values.
+- [Deep Q-Learning](https://arxiv.org/abs/1312.5602)
+- [Stable Baselines3 Documentation](https://stable-baselines3.readthedocs.io/)
+- [OpenAI Gym Documentation](https://gym.openai.com/docs/)
 
 ## 🚀 Getting Started
 
-To get started with this project:
+To get started with this project, follow these steps:
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/flappy-bird-reinforcement-learning.git
-   cd flappy-bird-reinforcement-learning
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/flappy-bird-reinforcement-learning.git
+cd flappy-bird-reinforcement-learning
+```
+
+### 2. Install Dependencies
+
+Install the required libraries and packages:
+
+```bash
+pip install pygame keras-rl2 stable-baselines3[extra] gymnasium
+```
+
+### 3. Set Up and Train the Model
+
+Run the following script to set up the environment, build the neural network, and train the model:
+
+```python
+import time
+import numpy as np
+import gym
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten
+from tensorflow.keras.optimizers import Adam
+from stable_baselines3 import DQN
+from stable_baselines3.common.vec_env import DummyVecEnv
+from stable_baselines3.common.callbacks import BaseCallback, CheckpointCallback
+from stable_baselines3.common.evaluation import evaluate_policy
+import matplotlib.pyplot as plt
+import flappy_bird_gym
+
+# Define the environment
+env = flappy_bird_gym.make("FlappyBird-v0", new_step_api=True)
+
+# Define the neural network model
+def build_model(input_shape, actions):
+    model = Sequential()
+    model.add(Dense(64, activation='relu', input_shape=(1, input_shape)))
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(256, activation='relu'))
+    model.add(Dense(64, activation='relu'))
+    model.add(Dense(128, activation='relu'))
+    model.add(Flatten())
+    model.add(Dense(actions, activation='linear'))
+    model.summary()
+    return model
+
+# Build the model
+obs = env.observation_space.shape[0]
+actions = env.action_space.n
+model = build_model(obs, actions)
+
+# Define the Plotting Callback
+class PlottingCallback(BaseCallback):
+    def __init__(self, save_freq, verbose=1):
+        super(PlottingCallback, self).__init__(verbose)
+        self.save_freq = save_freq
+        self.rewards = []
+        self.steps = []
+        self.cumulative_rewards = []
+
+    def _on_step(self) -> bool:
+        if self.n_calls % self.save_freq == 0:
+            # Collect metrics
+            env = self.model.get_env()
+            mean_reward, _ = evaluate_policy(self.model, env, n_eval_episodes=10, return_episode_rewards=False)
+            self.rewards.append(mean_reward)
+            self.steps.append(self.num_timesteps)
+
+            # Track cumulative reward
+            self.cumulative_rewards.append(mean_reward * 10)  # Assuming 10 episodes
+
+            # Plot metrics
+            fig, axs = plt.subplots(2, 1, figsize=(14, 8))
+
+            # Mean Reward
+            axs[0].plot(self.steps, self.rewards, label='Mean Reward', color='blue')
+            axs[0].set_xlabel('Timesteps')
+            axs[0].set_ylabel('Mean Reward')
+            axs[0].set_title('Mean Reward Over Time')
+            axs[0].legend()
+            axs[0].grid()
+
+            # Cumulative Reward
+            axs[1].plot(self.steps, self.cumulative_rewards, label='Cumulative Reward', color='orange')
+            axs[1].set_xlabel('Timesteps')
+            axs[1].set_ylabel('Cumulative Reward')
+            axs[1].set_title('Cumulative Reward Over Time')
+            axs[1].legend()
+            axs[1].grid()
+
+            plt.tight_layout()
+            plt.show()
+
+        return True
+
+# Create the environment
+env = DummyVecEnv([lambda: gym.make('FlappyBird-v0')])
+
+# Build the DQN model
+model = DQN(
+    "MlpPolicy",
+    env,
+    learning_rate=0.00025,
+    buffer_size=100000,
+    batch_size=32,
+    tau=1.0,
+    gamma=0.99,
+    train_freq=4,
+    gradient_steps=1,
+    target_update_interval=1000,
+    exploration_fraction=0.1,
+    exploration_final_eps=0.01,
+    max_grad_norm=10,
+    verbose=1,
+)
+
+# Define the checkpoint callback
+checkpoint_callback = CheckpointCallback(
+    save_freq=40000,
+    save_path='/content/drive/MyDrive/Flap/',
+    name_prefix='checkpoint_Sanya' #name of the checkpoint
+)
+
+# Define the callback for plotting
+plotting_callback = PlottingCallback(save_freq=10000)
+
+# Train the model with both callbacks
+model.learn(total_timesteps=2000000, log_interval=10, callback=[checkpoint_callback, plotting_callback])
+
+# Clean up the environment after training
+env.close()
+```
+
+## 🛠 Tech Stack
+
+- **Python Libraries:** TensorFlow, Keras, Stable Baselines3, OpenAI Gym, Matplotlib, Pygame
+- **Reinforcement Learning:** Deep Q-Learning (DQN)
+- **Environment:** Flappy Bird Gym Environment
+
+## 📈 Results
+
+The model's performance is tracked and visualized with graphs showing the mean reward and cumulative reward over time using matplotlib.
+
+feel free to open an issue or contribute to the project!
+
+```
+
