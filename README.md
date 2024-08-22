@@ -18,6 +18,7 @@
 ## 🏆 About
 
 **Training Flappy Bird using Reinforcement Learning**
+
 This project applies reinforcement learning to the classic Flappy Bird game using Stable Baselines3 and OpenAI Gym. It includes training a Deep Q-Network (DQN) to master the game and evaluate its performance over time. 
 
 ## 📂 The Solution Architecture
