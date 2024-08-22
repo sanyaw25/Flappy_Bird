@@ -195,5 +195,24 @@ The model's performance is tracked and visualized with graphs showing the mean r
 
 feel free to open an issue or contribute to the project!
 
-```
 
+## 📧 Contact
+
+For any questions or feedback, feel free to reach out at [sanyaw12722@gmail.com](mailto:your-email@example.com).
+
+
+## 🔧 Troubleshooting
+
+**Common Issues:**
+- Issue: "Error while installing dependencies"
+  - Solution: Ensure you have the correct version of Python and all required libraries that are compatible.
+
+
+## 🚧 Roadmap
+
+- **Future Improvements:** Will add visuals and sounds for the game.
+
+## 🤝 Acknowledgments
+
+- Thanks to the creators of [Flappy Bird](https://en.wikipedia.org/wiki/Flappy_Bird) and the developers of [Stable Baselines3](https://stable-baselines3.readthedocs.io/) and https://github.com/samboylan11/flappy-bird-gym for the inspiration and environment.
+```
