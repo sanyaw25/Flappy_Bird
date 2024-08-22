@@ -15,13 +15,14 @@
   <img src="https://upload.wikimedia.org/wikipedia/en/0/0a/Flappy_Bird_icon.png" alt="Flappy Bird" width="400"/>
 </div>
 
-## 🏆 About
+## 🏆 <a id="about">About</a>
 
 **Training Flappy Bird using Reinforcement Learning**
 
 This project applies reinforcement learning to the classic Flappy Bird game using Stable Baselines3 and OpenAI Gym. It includes training a Deep Q-Network (DQN) to master the game and evaluate its performance over time. 
 
-## 📂 The Solution Architecture
+## 📂 <a id="solution-architecture">The Solution Architecture</a>
+
 
 ### Project Overview
 
@@ -36,7 +37,7 @@ This project applies reinforcement learning to the classic Flappy Bird game usin
 - **Callbacks:** Custom callbacks for saving model checkpoints and plotting training metrics.
 - **Training Script:** Executes the training process and monitors performance.
 
-## 🔬 Research
+## 🔬 <a id="research">Research</a>
 
 For insights into reinforcement learning and the DQN algorithm, refer to these resources:
 
@@ -44,7 +45,8 @@ For insights into reinforcement learning and the DQN algorithm, refer to these r
 - [Stable Baselines3 Documentation](https://stable-baselines3.readthedocs.io/)
 - [OpenAI Gym Documentation](https://gym.openai.com/docs/)
 
-## 🚀 Getting Started
+## 🚀 <a id="getting-started">Getting Started</a>
+
 
 To get started with this project, follow these steps:
 
@@ -184,7 +186,7 @@ model.learn(total_timesteps=2000000, log_interval=10, callback=[checkpoint_callb
 env.close()
 ```
 
-## 🛠 Tech Stack
+🛠 <a id="tech-stack">Tech Stack</a>
 
 - **Python Libraries:** TensorFlow, Keras, Stable Baselines3, OpenAI Gym, Matplotlib, Pygame
 - **Reinforcement Learning:** Deep Q-Learning (DQN)
@@ -196,22 +198,19 @@ The model's performance is tracked and visualized with graphs showing the mean r
 
 feel free to open an issue or contribute to the project!
 
+- **Future Improvements:** Will add visuals and sounds for the game.
 
-## 📧 Contact
+<a id="contact">Contact</a>
 
 For any questions or feedback, feel free to reach out at [sanyaw12722@gmail.com](mailto:sanyaw12722@gmail.com)
 or hit me up on linkedin at [Sanya Wadhawan]((https://www.linkedin.com/in/sanya-wadhawan1/)
 
-## 🔧 Troubleshooting
+🔧 <a id="troubleshooting">Troubleshooting</a>
 
 **Common Issues:**
 - Issue: "Error while installing dependencies"
   - Solution: Ensure you have the correct version of Python and all required libraries that are compatible.
 
-
-## 🚧 Roadmap
-
-- **Future Improvements:** Will add visuals and sounds for the game.
 
 ## 🤝 Acknowledgments
 
